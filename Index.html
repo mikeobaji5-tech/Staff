@@ -1,356 +1,745 @@
-<!doctype html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Merchant Support Gateway — Independent Partner</title>
-
-  <!-- Tailwind Play CDN (fast way to style without build) -->
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  
+  <!-- Premium Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* =====================================================
-       PREMIUM ANIMATIONS & EFFECTS
-    ===================================================== */
-    .fade-in { animation: fadeIn .28s ease both; }
-    @keyframes fadeIn { 
-      from { opacity: 0; transform: translateY(6px) } 
-      to { opacity: 1; transform: none } 
-    }
-    
-    .slide-up { animation: slideUp 0.6s ease-out both; }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* CSS Variables */
+    :root{
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --secondary: #06B6D4;
+      --accent: #10B981;
+      --gold: #F59E0B;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --text-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
-    .premium-gradient {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Premium Typography */
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
     }
     
+    .font-modern {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .font-body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+
+    /* Premium Text Effects */
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-emerald {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Advanced Text Shadows */
+    .text-shadow-soft {
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .text-shadow-medium {
+      text-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .text-shadow-strong {
+      text-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    
+    .text-shadow-glow {
+      text-shadow: 0 0 20px rgba(79, 70, 229, 0.4), 0 0 40px rgba(79, 70, 229, 0.2);
+    }
+
+    /* Premium Loading Screen Styles */
+    .loading-container {
+      background: linear-gradient(135deg, #1F2937 0%, #374151 50%, #111827 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+      animation: backgroundShift 12s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+      33% { opacity: 0.8; transform: scale(1.05) rotate(1deg); }
+      66% { opacity: 0.9; transform: scale(0.95) rotate(-1deg); }
+    }
+
+    .loading-content {
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .loading-icon {
+      width: 6rem; height: 6rem;
+      margin: 0 auto 2rem;
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: iconFloat 4s ease-in-out infinite;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      25% { transform: translateY(-8px) scale(1.02); }
+      50% { transform: translateY(-15px) scale(1.05); }
+      75% { transform: translateY(-8px) scale(1.02); }
+    }
+
+    .loading-icon i {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: iconPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .loading-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
+      font-family: 'Space Grotesk', sans-serif;
+      animation: titleGlow 3s ease-in-out infinite;
+      background: linear-gradient(135deg, #fff 0%, #e5e7eb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { 
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+        transform: scale(1);
+      }
+      50% { 
+        text-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+        transform: scale(1.02);
+      }
+    }
+
+    .loading-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 3rem;
+      font-weight: 500;
+      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      animation: subtitleFade 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes subtitleFade {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    .loading-spinner-container {
+      position: relative;
+      margin: 0 auto 2rem;
+      width: 6rem; height: 6rem;
+    }
+
+    .loading-spinner {
+      width: 6rem; height: 6rem;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid var(--primary);
+      border-right: 4px solid var(--secondary);
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+      position: relative;
+      box-shadow: 0 0 30px rgba(79, 70, 229, 0.3);
+    }
+
+    .loading-spinner::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 3.5rem; height: 3.5rem;
+      margin: -1.75rem 0 0 -1.75rem;
+      border: 2px solid transparent;
+      border-top: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite reverse;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-percentage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      font-size: 1.25rem;
+      z-index: 5;
+      font-family: 'Space Grotesk', sans-serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .loading-dots {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .dot {
+      width: 12px; height: 12px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+      border-radius: 50%;
+      animation: dotPulse 1.6s ease-in-out infinite both;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotPulse {
+      0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+    }
+
+    /* Premium Card Effects */
     .premium-card {
       background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 2px 16px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
 
-    /* =====================================================
-       LOADING SPINNER & PROGRESS
-    ===================================================== */
-    .spinner { 
-      border: 3px solid #e5e7eb; 
-      border-top: 3px solid #10b981; 
-      border-radius: 50%; 
-      width: 40px; 
-      height: 40px; 
-      animation: spin 1s linear infinite; 
-      margin: 0 auto; 
+    .premium-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    @keyframes spin { 
-      0% { transform: rotate(0deg);} 
-      100% { transform: rotate(360deg);} 
+    
+    .premium-hover:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
 
-    /* =====================================================
-       VERIFICATION TICK STYLES
-    ===================================================== */
+    /* Premium Headings */
+    .premium-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    
+    .premium-heading-xl {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .premium-heading-lg {
+      font-size: 2.5rem;
+      color: #1f2937;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .premium-heading-md {
+      font-size: 1.875rem;
+      color: #374151;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Premium Body Text */
+    .premium-text {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      color: #4b5563;
+      font-weight: 400;
+    }
+    
+    .premium-text-lg {
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+    
+    .premium-text-lead {
+      font-size: 1.25rem;
+      line-height: 1.75;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    /* Animated Text Effects */
+    .text-animate-in {
+      animation: textSlideUp 0.8s ease-out both;
+    }
+    
+    .text-animate-in-delay-1 {
+      animation: textSlideUp 0.8s ease-out 0.2s both;
+    }
+    
+    .text-animate-in-delay-2 {
+      animation: textSlideUp 0.8s ease-out 0.4s both;
+    }
+
+    @keyframes textSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Premium Effects */
+    .fade-in { 
+      animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; 
+    }
+    
+    @keyframes fadeIn { 
+      from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95);
+      } 
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+      } 
+    }
+    
+    .slide-up { 
+      animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; 
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(40px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+      }
+    }
+
+    /* Verification Tick */
     .verification-tick {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
-      background: #1DA1F2;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%);
       border-radius: 50%;
       margin-left: 8px;
-      animation: verifyPulse 2s ease-in-out infinite;
+      animation: verifyPulse 3s ease-in-out infinite;
+      box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
     }
     
     @keyframes verifyPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(29, 161, 242, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(29, 161, 242, 0); }
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+      }
+      50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 4px 16px rgba(29, 161, 242, 0.5);
+      }
     }
 
-    /* =====================================================
-       ONLINE STATUS INDICATOR
-    ===================================================== */
+    /* Online Status */
     .online-status {
       position: fixed;
-      top: 80px;
-      left: 50%;
+      top: 80px; left: 50%;
       transform: translateX(-50%);
       z-index: 40;
-      animation: statusSlide 0.8s ease-out;
+      animation: statusSlide 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     @keyframes statusSlide {
-      from { opacity: 0; transform: translate(-50%, -20px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -30px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, 0);
+      }
     }
 
     .online-dot {
-      width: 8px;
-      height: 8px;
-      background: #10b981;
+      width: 10px; height: 10px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
       border-radius: 50%;
       animation: onlinePulse 2s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
     }
     
     @keyframes onlinePulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.7;
+        transform: scale(1.1);
+      }
     }
 
-    /* =====================================================
-       FLOATING WHATSAPP BUTTON
-    ===================================================== */
+    /* Floating WhatsApp */
     .floating-whatsapp {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background: #25D366;
+      bottom: 24px; right: 24px;
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #25D366 0%, #1ebe57 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      box-shadow: 
+        0 8px 25px rgba(37, 211, 102, 0.4),
+        0 4px 12px rgba(37, 211, 102, 0.3);
       cursor: pointer;
       z-index: 50;
-      transition: all 0.3s ease;
-      animation: float 3s ease-in-out infinite;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: whatsappFloat 4s ease-in-out infinite;
     }
     
     .floating-whatsapp:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+      transform: scale(1.15) translateY(-2px);
+      box-shadow: 
+        0 12px 35px rgba(37, 211, 102, 0.6),
+        0 6px 16px rgba(37, 211, 102, 0.4);
     }
     
-    @keyframes float {
+    @keyframes whatsappFloat {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-12px); }
     }
 
-    /* =====================================================
-       PREMIUM HOVER EFFECTS
-    ===================================================== */
-    .premium-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Success Stories Enhancement */
+    .success-wix {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
     
-    .premium-hover:hover {
-      transform: translateY(-4px);
+    .success-wix:hover {
+      transform: translateY(-8px) scale(1.02);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
+    
+    .success-metric {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
 
-    /* =====================================================
-       TOAST NOTIFICATION
-    ===================================================== */
-    .toast { 
-      position: fixed; 
-      right: 20px; 
-      bottom: 100px; 
-      z-index: 9999; 
+    /* Enhanced Buttons */
+    .premium-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      letter-spacing: 0.025em;
+    }
+    
+    .premium-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .premium-btn:hover::before {
+      left: 100%;
+    }
+
+    /* Responsive Typography */
+    @media (max-width: 768px) {
+      .premium-heading-xl { font-size: 2.5rem; }
+      .premium-heading-lg { font-size: 2rem; }
+      .premium-heading-md { font-size: 1.5rem; }
+      .premium-text-lead { font-size: 1.125rem; }
+      .loading-title { font-size: 2rem; }
+      .loading-subtitle { font-size: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .premium-heading-xl { font-size: 2rem; }
+      .premium-heading-lg { font-size: 1.75rem; }
+      .premium-heading-md { font-size: 1.25rem; }
     }
   </style>
 
-  <!-- Set favicon from CONFIG -->
   <link id="faviconLink" rel="icon" href="">
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900 antialiased">
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 text-gray-900 antialiased">
 
-<!-- =====================================================
-     CONFIGURATION SECTION - EDIT YOUR SETTINGS HERE
-===================================================== -->
+<!-- Configuration -->
 <script>
   const CONFIG = {
-    // CONTACT INFORMATION
     logoUrl: "https://i.pinimg.com/736x/3a/9d/91/3a9d9115f2936dbd8979e34381da7973.jpg",
-    whatsappNumber: "2349135251130",   // no plus sign, country code first
-    telegramUsername: "t.me/Xcellexert",    // username only
+    whatsappNumber: "2349135251130",
+    telegramUsername: "t.me/Xcellexert",
     supportEmail: "xcellexpert.storeagent@gmail.com",
-
-    // ADVISOR DETAILS
-    advisor: {
+    
+    developer: {
       name: "Juan Manuel",
       title: "Compliance & Merchant Support Advisor",
       partnerBadge: "Independent Partner Resource",
       staffId: "ADV-342991",
       caseId: "CS-114882",
       years: "5+ years",
-      merchantsHelped: 76,
+      storesBuilt: 76,
       rating: 4.9,
-      photoUrl: "	https://i.pinimg.com/736x/2f/53/58/2f535867ec2ea063d07e3c4148d18cf8.jpg"
+      photoUrl: "https://i.pinimg.com/736x/2f/53/58/2f535867ec2ea063d07e3c4148d18cf8.jpg"
     },
-
-    // SYSTEM SETTINGS
+    
     ticketId: "SX-119.001",
-    loadingDuration: 2500  // Reduced from 5000ms to 2500ms
+    loadingDuration: 3000
   };
 </script>
 
-<!-- =====================================================
-     LOADING SCREEN SECTION
-===================================================== -->
-<div id="loading" class="min-h-screen flex items-center justify-center px-6 premium-gradient">
-  <div class="max-w-md w-full text-center">
-    <!-- Logo during loading -->
-    <div class="block md:hidden mb-4">
-      <img id="logoTopLoadingMobile" alt="Logo" class="mx-auto w-20 h-20 rounded-full object-cover border-2 border-white/30 shadow-xl" src="" />
+<!-- Loading Screen -->
+<div id="loading" class="loading-container">
+  <div class="loading-content">
+    <div class="loading-icon">
+      <i class="fa-solid fa-store"></i>
     </div>
-    <div class="hidden md:block mb-4">
-      <img id="logoTopLoading" alt="Logo" class="mx-auto w-14 h-14 rounded-full object-cover border-2 border-white/30 shadow-xl" src="" />
+    
+    <h1 class="loading-title">Merchant Gateway</h1>
+    <p id="loadingSubtitle" class="loading-subtitle">Preparing your premium workspace...</p>
+    
+    <div class="loading-spinner-container">
+      <div class="loading-spinner"></div>
+      <div id="percentageCounter" class="loading-percentage">0%</div>
     </div>
-
-    <h2 class="text-xl font-semibold mb-3 text-white">Preparing your premium advisor workspace…</h2>
-
-    <!-- Step-by-step status messages -->
-    <div class="mb-6">
-      <div id="statusMessage" class="text-lg font-medium text-white/90 min-h-[2rem] transition-opacity duration-300">
-        Initiating merchant verification...
-      </div>
+    
+    <div class="loading-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
     </div>
-
-    <!-- Percentage counter -->
-    <div class="text-3xl font-bold text-white mb-4">
-      <span id="percentageCounter">0</span>%
-    </div>
-
-    <!-- Premium loading spinner -->
-    <div class="spinner" aria-hidden="true" style="border-top-color: white;"></div>
   </div>
 </div>
 
-<!-- =====================================================
-     ONLINE STATUS INDICATOR
-===================================================== -->
+<!-- Online Status -->
 <div id="onlineStatus" class="online-status hidden">
-  <div class="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 shadow-lg flex items-center gap-2">
+  <div class="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full px-5 py-3 shadow-xl flex items-center gap-3">
     <div class="online-dot"></div>
-    <span class="text-xs font-medium text-gray-700">Juan Manuel • Online Now</span>
+    <span class="text-sm font-semibold text-gray-700">Juan Manuel • Online Now</span>
   </div>
 </div>
 
-<!-- =====================================================
-     MAIN CONTENT SECTION
-===================================================== -->
+<!-- Main Content -->
 <main id="main" class="hidden min-h-screen pb-12">
-  <!-- =====================================================
-       HEADER SECTION
-  ===================================================== -->
-  <header class="sticky top-0 bg-white/80 backdrop-blur-md border-b z-30">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <img id="logoTop" alt="Logo" class="w-9 h-9 rounded-full object-cover border border-emerald-200 shadow-sm" src="" />
+  <!-- Header -->
+  <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200/50 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img id="logoTop" alt="Logo" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-200 shadow-md" src="" />
         <div>
-          <div class="text-sm font-semibold">Merchant Support Gateway</div>
-          <div class="text-xs text-gray-500">Premium Partner Resource</div>
+          <div class="text-base font-bold text-gradient">Merchant Support Gateway</div>
+          <div class="text-xs text-gray-500 font-medium">Premium Partner Resource</div>
         </div>
       </div>
-      <div class="hidden md:flex items-center gap-3 text-xs text-gray-600">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V7a6 6 0 0 0-12 0v1"/><path d="M5 11v6a4 4 0 0 0 4 4h6"/></svg>
-        <span>End-to-end encrypted channels</span>
+      <div class="hidden md:flex items-center gap-3 text-sm text-gray-600">
+        <i class="fas fa-star text-yellow-400"></i>
+        <span class="font-medium">End-to-end encrypted channels</span>
       </div>
     </div>
   </header>
 
-  <!-- =====================================================
-       ADVISOR & HOW IT WORKS SECTION
-  ===================================================== -->
-  <section class="max-w-5xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
     <!-- LEFT: ADVISOR CARD -->
-    <div class="premium-card rounded-2xl p-6 md:p-8 slide-up premium-hover">
+    <div class="premium-card rounded-3xl p-8 md:p-10 slide-up premium-hover">
       <!-- Service overview -->
-      <div class="mb-5 p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-        <p class="text-sm text-blue-900">
-          We provide a complete compliance audit, SEO visibility review, and tailored growth strategy for your store.
-          Quick fixes, marketing guidance, and developer referrals if needed — all aimed at boosting sales and securing your store.
+      <div class="mb-6 p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200/50">
+        <p class="premium-text text-blue-900 font-medium">
+          We provide a <strong class="text-gradient-blue">complete compliance audit</strong>, SEO visibility review, and tailored growth strategy for your store.
+          Quick fixes, marketing guidance, and developer referrals if needed — all aimed at <strong class="text-gradient-emerald">boosting sales</strong> and securing your store.
         </p>
       </div>
 
       <!-- Priority case notice -->
-      <div class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-3 mb-5">
-        <svg class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6l4 2"/></svg>
-        <p class="text-sm text-amber-800">
-          <strong>Priority Case:</strong> Immediate advisor attention required for compliance review.
+      <div class="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/50 p-4 mb-6">
+        <svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6l4 2"/></svg>
+        <p class="premium-text text-amber-800">
+          <strong class="text-gradient-gold">Priority Case:</strong> Immediate advisor attention required for compliance review.
         </p>
       </div>
 
-      <!-- Advisor profile section -->
-      <div class="flex items-start gap-6">
+      <!-- Developer Profile -->
+      <div class="flex items-start gap-8">
         <div class="relative">
-          <img id="advisorPhoto" src="" alt="Advisor" class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-2 border-emerald-200 shadow-lg" />
-          <div class="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 border-2 border-white rounded-full flex items-center justify-center">
-            <div class="w-3 h-3 bg-white rounded-full"></div>
+          <img id="developerPhoto" src="" alt="Developer" class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-2 border-emerald-200 shadow-lg" />
+          <div class="">
+            <div class="w-4 h-4 bg-white rounded-full"></div>
           </div>
         </div>
         
         <div class="flex-1">
           <div class="flex items-center">
-            <h1 id="advisorName" class="text-2xl font-semibold tracking-tight"></h1>
-            <!-- VERIFICATION TICK -->
+            <h1 id="developerName" class="premium-heading-lg text-animate-in"></h1>
             <div class="verification-tick">
-              <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 12l2 2 4-4"/>
-              </svg>
+              <i class="fas fa-check text-white text-sm"></i>
             </div>
           </div>
-          <p id="advisorTitle" class="text-emerald-700 text-sm font-medium mt-1"></p>
+          <p id="developerTitle" class="text-gradient-emerald text-base font-semibold mt-2 text-animate-in-delay-1"></p>
 
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-gray-600">
-            <span id="staffIdSpan"></span>
-            <span id="caseIdSpan"></span>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-gray-600 text-animate-in-delay-2">
+            <span id="devIdSpan" class="font-medium"></span>
+            <span id="projectIdSpan" class="font-medium"></span>
           </div>
 
-          <div class="flex flex-wrap items-center gap-4 mt-2 text-xs text-gray-600">
-            <span id="expSpan"></span>
-            <span id="helpedSpan"></span>
-            <span id="ratingSpan"></span>
+          <div class="flex flex-wrap items-center gap-5 mt-3 text-sm text-gray-600">
+            <span id="expSpan" class="font-medium"></span>
+            <span id="builtSpan" class="font-medium"></span>
+            <span id="ratingSpan" class="font-medium"></span>
           </div>
 
-          <div class="inline-flex items-center gap-2 mt-2 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border border-emerald-200">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7v2.25a.75.75 0 0 1-.75.75H3"/></svg>
-            <span id="badgeSpan"></span>
+          <div class="inline-flex items-center gap-3 mt-4 text-sm px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border border-emerald-200/50 shadow-sm">
+            <i class="fas fa-shield-alt text-emerald-600"></i>
+            <span id="badgeSpan" class="font-semibold"></span>
           </div>
         </div>
       </div>
 
       <!-- Service description -->
-      <p class="mt-6 text-sm text-gray-700 leading-relaxed">
-        Your advisor will begin with a comprehensive <strong>staff-level compliance audit</strong> covering policies, store setup, security headers, and SEO visibility.
+      <p class="mt-8 premium-text-lead leading-relaxed text-shadow-soft">
+        Your advisor will begin with a comprehensive <strong class="text-gradient-blue">staff-level compliance audit</strong> covering policies, store setup, security headers, and SEO visibility.
         If technical fixes are required, you'll be referred to our certified developer partner network for seamless implementation.
       </p>
 
       <!-- CTA BUTTONS SECTION -->
-      <div class="grid sm:grid-cols-3 gap-3 mt-6">
-        <button data-channel="whatsapp" class="contactBtn group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 text-sm font-medium transition-all duration-300">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div class="grid sm:grid-cols-3 gap-4 mt-8">
+        <button data-channel="whatsapp" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           WhatsApp
-          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/></svg>
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
 
-        <button data-channel="telegram" class="contactBtn group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 text-sm font-medium transition-all duration-300">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M21 4L7.5 12.5"/></svg>
+        <button data-channel="telegram" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 4L7.5 12.5"/></svg>
           Telegram
-          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/></svg>
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
 
-        <button data-channel="email" class="contactBtn group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gray-800 to-gray-900 hover:from-black hover:to-gray-800 text-white py-3 text-sm font-medium transition-all duration-300">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h15A2.5 2.5 0 0 1 22 6.5v11A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5v-11z"/></svg>
+        <button data-channel="email" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-900 hover:from-black hover:to-gray-800 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h15A2.5 2.5 0 0 1 22 6.5v11A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5v-11z"/></svg>
           Secure Email
-          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/></svg>
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
       </div>
 
       <!-- Security notice -->
-      <p class="mt-3 flex items-center gap-2 text-xs text-gray-600">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11z"/></svg>
-        All conversations are encrypted and handled under premium merchant-care protocols.
+      <p class="mt-4 flex items-center gap-3 premium-text text-gray-600">
+        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11z"/></svg>
+        All conversations are encrypted and handled under <strong class="text-gradient-emerald"></strong>.
       </p>
     </div>
-
+    
      </div>
       <div class="hero-gallery__main-image">
         <video src="https://www.charleagency.com/assets/videos/hero-video.mp4" autoplay muted loop playsinline></video>
@@ -361,50 +750,62 @@
 <!-- End Hero Gallery -->
 
     <!-- RIGHT: HOW IT WORKS -->
-    <aside class="premium-card rounded-2xl p-6 md:p-8 slide-up premium-hover" style="animation-delay: 0.2s;">
-      <h2 class="text-lg font-semibold mb-3">How this works</h2>
-      <ol class="space-y-3 text-sm">
-        <li class="flex items-start gap-3">
-          <div class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg class="w-3 h-3 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+    <aside class="premium-card rounded-3xl p-8 md:p-10 slide-up premium-hover" style="animation-delay: 0.2s;">
+      <h2 class="premium-heading-md mb-5 text-shadow-soft">How this works</h2>
+      <ol class="space-y-4 premium-text">
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
           </div>
-          <span><strong>Staff-Level Audit</strong> → comprehensive review of compliance, setup, SEO visibility, and risk signals.</span>
+          <span><strong class="text-gradient-emerald">Staff-Level Audit</strong> → comprehensive review of compliance, setup, SEO visibility, and risk signals.</span>
         </li>
-        <li class="flex items-start gap-3">
-          <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg class="w-3 h-3 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
           </div>
-          <span><strong>Results Delivered</strong> → you receive a detailed diagnosis with prioritized action items.</span>
+          <span><strong class="text-gradient-blue">Results Delivered</strong> → you receive a detailed diagnosis with prioritized action items.</span>
         </li>
-        <li class="flex items-start gap-3">
-          <div class="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg class="w-3 h-3 text-purple-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-purple-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
           </div>
-          <span><strong>Expert Referrals</strong> → seamless handoff to certified developer partners for implementation.</span>
+          <span><strong class="text-gradient">Expert Referrals</strong> → seamless handoff to certified developer partners for implementation.</span>
         </li>
       </ol>
 
       <!-- GROWTH SUPPORT SECTION -->
-      <div class="mt-6 bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 p-4 rounded-xl">
-        <h3 class="font-semibold text-sm text-emerald-700 mb-2 flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <div class="mt-8 bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200/50 p-6 rounded-2xl shadow-sm">
+        <h3 class="premium-heading font-semibold text-base text-emerald-700 mb-3 flex items-center gap-3">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
           </svg>
           Premium Growth & Marketing
         </h3>
-        <ul class="text-xs text-gray-700 space-y-1">
-          <li>• Store speed & conversion optimization</li>
-          <li>• SEO & visibility improvements</li>
-          <li>• Paid ads funnel strategy</li>
-          <li>• Trust badges & retention tools</li>
+        <ul class="premium-text text-xs text-gray-700 space-y-2">
+          <li class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+            Store speed & conversion optimization
+          </li>
+          <li class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+            SEO & visibility improvements
+          </li>
+          <li class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+            Paid ads funnel strategy
+          </li>
+          <li class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+            Trust badges & retention tools
+          </li>
         </ul>
-        <button data-channel="whatsapp" class="contactBtn mt-3 w-full rounded-lg bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-2 text-xs font-medium transition-all duration-300">Talk to Growth Advisor</button>
+        <button data-channel="whatsapp" class="contactBtn premium-btn mt-4 w-full rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 text-sm font-semibold transition-all duration-300 shadow-md">Talk to Growth Advisor</button>
       </div>
 
       <!-- Disclosure -->
-      <div class="mt-5 rounded-xl border border-gray-200 p-4 text-xs text-gray-600 bg-gray-50/50">
-        <p class="font-medium text-gray-800 mb-1">Fair-Use Disclosure</p>
-        <p>
+      <div class="mt-6 rounded-2xl border border-gray-200/50 p-5 premium-text bg-gray-50/50">
+        <p class="font-semibold text-gray-800 mb-2 text-sm">Fair-Use Disclosure</p>
+        <p class="text-xs leading-relaxed">
           This site is operated by an independent partner to continue merchant cases after staff interactions.
           References are for workflow clarity only.
         </p>
@@ -412,261 +813,298 @@
     </aside>
   </section>
 
-  <!-- =====================================================
-       TRUST INDICATORS SECTION
-  ===================================================== -->
-  <section class="max-w-5xl mx-auto px-4 grid sm:grid-cols-3 gap-4">
-    <div class="p-4 rounded-xl border bg-white/90 backdrop-blur-sm flex items-center gap-3 text-sm premium-hover">
-      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 6 6 .9-4.5 3.9L19 22 12 18.5 5 22l1.5-8.2L2 10.9 8 10z"/></svg>
-      </div>
-      <span>Verified Premium Partner</span>
-    </div>
-    <div class="p-4 rounded-xl border bg-white/90 backdrop-blur-sm flex items-center gap-3 text-sm premium-hover">
-      <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-        <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11z"/></svg>
-      </div>
-      <span>End-to-end Encrypted</span>
-    </div>
-    <div class="p-4 rounded-xl border bg-white/90 backdrop-blur-sm flex items-center gap-3 text-sm premium-hover">
-      <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-        <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/></svg>
-      </div>
-      <span id="casesHandledSpan">76+ merchant cases handled</span>
-    </div>
-  </section>
+  <!-- Recent Merchant Success Stories -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <div class="premium-card rounded-3xl p-10">
+      <h3 class="premium-heading-lg text-center mb-8 text-shadow-medium">Recent Merchant Success Stories</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-  <!-- =====================================================
-       CASE STUDIES SECTION
-  ===================================================== -->
-  <section class="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-    <div class="premium-card rounded-xl p-4 flex flex-col gap-3 premium-hover">
-      <img src="https://i.pinimg.com/736x/6c/71/e8/6c71e84df436880b442e6598dc4a999e.jpg" alt="Conversion lift chart" class="w-full h-40 sm:h-32 object-cover rounded" />
-      <div>
-        <div class="text-base sm:text-sm font-semibold">+30% Conversion Lift</div>
-        <p class="text-sm sm:text-xs text-gray-600 mt-1">Quick checkout fixes & trust badges boosted conversions by 30% in 2 weeks.</p>
-      </div>
-    </div>
+        <!-- Success Story 1 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/d5/00/1f/d5001f1e9b700f8992c70aac15a2f245_t1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+30% conversion</div>
+            <p class="premium-text leading-relaxed">
+              Quick checkout fixes & trust badges boosted conversions by <strong class="text-gradient-emerald">30% in 2 weeks</strong> for a wellness brand.
+            </p>
+          </div>
+        </div>
 
-    <div class="premium-card rounded-xl p-4 flex flex-col gap-3 premium-hover">
-      <img src="https://i.pinimg.com/736x/e4/8f/df/e48fdf1b74b2471bf537193df06c01ac.jpg" alt="SEO visibility" class="w-full h-40 sm:h-32 object-cover rounded" />
-      <div>
-        <div class="text-base sm:text-sm font-semibold">SEO & Visibility Gains</div>
-        <p class="text-sm sm:text-xs text-gray-600 mt-1">SEO audit + metadata improvements increased organic visits by 45% in 60 days.</p>
-      </div>
-    </div>
+        <!-- Success Story 2 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/2f/a5/71/2fa571d90cddf28fb4656dac4f26468f_t1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+45% organic traffic</div>
+            <p class="premium-text leading-relaxed">
+              SEO audit + metadata improvements increased organic visits by <strong class="text-gradient-blue">45% in 60 days</strong> for a home goods store.
+            </p>
+          </div>
+        </div>
 
-    <div class="premium-card rounded-xl p-4 flex flex-col gap-3 premium-hover">
-      <img src="https://i.pinimg.com/736x/fb/fa/1d/fbfa1dabc7dd0a3ceec42dd23e140a98.jpg" alt="Revenue growth graph" class="w-full h-40 sm:h-32 object-cover rounded" />
-      <div>
-        <div class="text-base sm:text-sm font-semibold">Quarterly Revenue +40%</div>
-        <p class="text-sm sm:text-xs text-gray-600 mt-1">CRO & ad funnel tweaks scaled revenue 40% quarter-over-quarter for a fashion merchant.</p>
+        <!-- Success Story 3 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/a4/d7/62/a4d762f9abc98aac436c0813e82773ec_t1.mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+40% revenue</div>
+            <p class="premium-text leading-relaxed">
+              CRO & ad funnel optimization scaled revenue <strong class="text-gradient-gold">40% quarter-over-quarter</strong> for a fashion merchant.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Case Studies -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <h2 class="premium-heading-lg text-center mb-10 text-shadow-medium">Case Studies & Results</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/6c/71/e8/6c71e84df436880b442e6598dc4a999e.jpg" alt="Conversion lift chart" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient-emerald mb-2 text-shadow-soft">+147% Revenue Increase</div>
+        <p class="premium-text mb-4">Fashion retailer saw dramatic sales boost after checkout optimization and trust badge implementation.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 3-week implementation</div>
+          <div>• Mobile-first redesign</div> 
+          <div>• A/B tested checkout flow</div>
+        </div>
+      </div>
 
-  <!-- Pro Fading Images with Captions -->
-  <div class="fade-images">
-    <div class="image-slide active">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid1.webp" alt="Billionaire Boys Club">
-      <div class="caption">Billionaire Boys Club</div>
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/e4/8f/df/e48fdf1b74b2471bf537193df06c01ac.jpg" alt="SEO visibility" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient-blue mb-2 text-shadow-soft">+280% Organic Traffic</div>
+        <p class="premium-text mb-4">Electronics store gained massive SEO visibility through technical optimization and content strategy.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 8-week SEO overhaul</div>
+          <div>• Page speed optimization</div>
+          <div>• Schema markup implementation</div>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/fb/fa/1d/fbfa1dabc7dd0a3ceec42dd23e140a98.jpg" alt="Revenue growth graph" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient mb-2 text-shadow-soft">$50K → $180K Monthly</div>
+        <p class="premium-text mb-4">Health & wellness brand scaled revenue through conversion-optimized product pages and upsell funnels.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 12-week transformation</div>
+          <div>• Custom product configurator</div>
+          <div>• Automated email sequences</div>
+        </div>
+      </div>
     </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid5.webp" alt="Gray Nicolls Cricket">
-      <div class="caption">Gray Nicolls Cricket</div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <h2 class="premium-heading-lg text-center mb-10 text-shadow-medium">What Clients Say</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="premium-card rounded-2xl p-8 premium-hover">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="https://i.pinimg.com/736x/60/14/8c/60148c47284685edb02a8c236a407845.jpg?w=150" alt="Client" class="w-16 h-16 rounded-full object-cover shadow-md" />
+          <div>
+            <div class="font-bold text-base text-shadow-soft">Sarah Mitchell</div>
+            <div class="premium-text text-gray-600">Founder, EcoLiving Store</div>
+          </div>
+        </div>
+        <p class="premium-text-lg mb-4 leading-relaxed italic">"Juan completely transformed our Shopify store. Our conversion rate went from <strong class="text-gradient-blue">1.2% to 4.1%</strong> in just 6 weeks. The attention to detail and understanding of sales psychology is incredible."</p>
+        <div class="flex text-yellow-400 text-lg">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-2xl p-8 premium-hover">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Client" class="w-16 h-16 rounded-full object-cover shadow-md" />
+          <div>
+            <div class="font-bold text-base text-shadow-soft">Marcus Chen</div>
+            <div class="premium-text text-gray-600">CEO, TechGear Pro</div>
+          </div>
+        </div>
+        <p class="premium-text-lg mb-4 leading-relaxed italic">"Working with Juan was a game-changer. He didn't just build us a store - he built us a <strong class="text-gradient-emerald">sales machine</strong>. Revenue doubled in our first quarter after launch. Highly recommended!"</p>
+        <div class="flex text-yellow-400 text-lg">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
     </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid6.webp" alt="CleanCo">
-      <div class="caption">CleanCo</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid9.webp" alt="RNLI">
-      <div class="caption">RNLI</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid10.webp" alt="Sunnamusk">
-      <div class="caption">Sunnamusk</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid14.webp" alt="Case furniture">
-      <div class="caption">Case Furniture</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid2.webp" alt="Cambridge Satchel">
-      <div class="caption">Cambridge Satchel</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid4.webp" alt="Candy Kittens">
-      <div class="caption">Candy Kittens</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid7.webp" alt="Gilbert Rugby">
-      <div class="caption">Gilbert Rugby</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid8.webp" alt="Unndr">
-      <div class="caption">Unndr</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid13.webp" alt="Bio&Me">
-      <div class="caption">Bio&Me</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid11.webp" alt="Vollebak">
-      <div class="caption">Vollebak</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid3.webp" alt="111Skin">
-      <div class="caption">111Skin</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid12.webp" alt="Muc-Off">
-      <div class="caption">Muc-Off</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<style>
-/* Layout wrapper */
-.ticker-section {
-  max-width: 1200px;
-  margin: 40px auto;
-  text-align: center;
-  font-family: "Inter", Arial, sans-serif;
-}
-
-/* Premium ticker bar */
-.ticker-wrapper {
-  overflow: hidden;
-  background: linear-gradient(90deg, #111, #333);
-  color: #fff;
-  white-space: nowrap;
-  border-radius: 40px;
-  padding: 14px 0;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.ticker {
-  display: inline-block;
-  padding-left: 100%;
-  animation: ticker 25s linear infinite;
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-/* Pro fading slideshow */
-.fade-images {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  height: 500px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
-
-.image-slide {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  opacity: 0;
-  transition: opacity 1.8s ease-in-out, transform 6s ease;
-}
-
-.image-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.1);
-}
-
-.image-slide.active {
-  opacity: 1;
-  z-index: 2;
-}
-
-.image-slide.active img {
-  transform: scale(1);
-}
-
-/* Captions */
-.caption {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 3px 10px rgba(0,0,0,0.6);
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-  z-index: 4;
-}
-
-.image-slide.active .caption {
-  opacity: 1;
-}
-
-/* Gradient overlay */
-.fade-images::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-  z-index: 3;
-  pointer-events: none;
-  border-radius: 20px;
-}
-</style>
-
-<script>
-let index = 0;
-const slides = document.querySelectorAll(".image-slide");
-
-function showNextImage() {
-  slides[index].classList.remove("active");
-  index = (index + 1) % slides.length;
-  slides[index].classList.add("active");
-}
-
-setInterval(showNextImage, 5000); // 5s per slide
-</script>
- <!-- END grid -->
-  <!-- =====================================================
-       FOOTER SECTION
-  ===================================================== -->
-  <footer class="mt-10 border-top bg-white/50 backdrop-blur-sm">
-    <div class="max-w-6xl mx-auto px-4 py-6 text-xs text-gray-500">
-      <p>
-        © <span id="year"></span> Merchant Support Gateway — Premium Partner Resource.
+  <!-- Services Grid -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <div class="premium-card rounded-3xl p-10">
+      <h3 class="premium-heading-lg text-center mb-6 text-shadow-medium">Comprehensive Store Growth Services</h3>
+      <p class="premium-text-lead text-center mb-10 max-w-3xl mx-auto">
+        Our certified specialist network provides <strong class="text-gradient">end-to-end merchant support</strong>:
       </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Service 1 -->
+        <button onclick="openModal('Store compliance audit & policy review', '$199')" 
+          class="premium-btn block p-6 border-2 border-gray-200 rounded-2xl hover:shadow-2xl transition bg-white text-left w-full premium-hover">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-6 h-6 bg-gradient-to-br from-green-100 to-emerald-200 rounded-full flex items-center justify-center shadow-sm">
+              <i class="fa-solid fa-check text-emerald-600 text-sm"></i>
+            </div>
+            <span class="text-gray-800 font-semibold text-base">Store compliance audit & policy review</span>
+          </div>
+          <p class="premium-text mb-3">Ensure your store meets Shopify and legal compliance standards.</p>
+          <div class="text-gradient-emerald font-bold text-lg">Starting at $199</div>
+        </button>
+
+        <!-- Service 2 -->
+        <button onclick="openModal('Technical SEO optimization & site speed improvements', '$299')" 
+          class="premium-btn block p-6 border-2 border-gray-200 rounded-2xl hover:shadow-2xl transition bg-white text-left w-full premium-hover">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-6 h-6 bg-gradient-to-br from-green-100 to-emerald-200 rounded-full flex items-center justify-center shadow-sm">
+              <i class="fa-solid fa-check text-emerald-600 text-sm"></i>
+            </div>
+            <span class="text-gray-800 font-semibold text-base">Technical SEO optimization & site speed improvements</span>
+          </div>
+          <p class="premium-text mb-3">Boost visibility and user experience with SEO + speed fixes.</p>
+          <div class="text-gradient-blue font-bold text-lg">Starting at $299</div>
+        </button>
+
+        <!-- Service 3 -->
+        <button onclick="openModal('Conversion rate optimization & A/B testing', '$249')" 
+          class="premium-btn block p-6 border-2 border-gray-200 rounded-2xl hover:shadow-2xl transition bg-white text-left w-full premium-hover">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-6 h-6 bg-gradient-to-br from-green-100 to-emerald-200 rounded-full flex items-center justify-center shadow-sm">
+              <i class="fa-solid fa-check text-emerald-600 text-sm"></i>
+            </div>
+            <span class="text-gray-800 font-semibold text-base">Conversion rate optimization & A/B testing</span>
+          </div>
+          <p class="premium-text mb-3">Increase sales with data-driven CRO strategies.</p>
+          <div class="text-gradient font-bold text-lg">Starting at $249</div>
+        </button>
+
+        <!-- Service 4 -->
+        <button onclick="openModal('24/7 merchant support & emergency response', '$399')" 
+          class="premium-btn block p-6 border-2 border-gray-200 rounded-2xl hover:shadow-2xl transition bg-white text-left w-full premium-hover">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-6 h-6 bg-gradient-to-br from-green-100 to-emerald-200 rounded-full flex items-center justify-center shadow-sm">
+              <i class="fa-solid fa-check text-emerald-600 text-sm"></i>
+            </div>
+            <span class="text-gray-800 font-semibold text-base">24/7 merchant support & emergency response</span>
+          </div>
+          <p class="premium-text mb-3">Get round-the-clock support and emergency fixes.</p>
+          <div class="text-gradient-gold font-bold text-lg">Starting at $399</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead Magnet -->
+  <section class="max-w-5xl mx-auto px-4 mb-12">
+    <div class="premium-card rounded-3xl p-10 text-center premium-hover">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="premium-heading-xl mb-4 text-shadow-medium">Get Free Store Audit</h2>
+        <p class="premium-text-lead mb-8">"<strong class="text-gradient">5 Hidden Store Mistakes That Kill Sales</strong>" - A detailed analysis of your current store with actionable fixes that can boost conversions by <strong class="text-gradient-emerald">30%+ in 30 days</strong>.</p>
+        
+        <div class="grid md:grid-cols-3 gap-6 mb-8 premium-text">
+          <div class="flex items-center gap-3 justify-center">
+            <i class="fas fa-chart-line text-emerald-600 text-xl"></i>
+            <span class="font-semibold">Conversion Rate Analysis</span>
+          </div>
+          <div class="flex items-center gap-3 justify-center">
+            <i class="fas fa-mobile-alt text-blue-600 text-xl"></i>
+            <span class="font-semibold">Mobile Optimization Review</span>
+          </div>
+          <div class="flex items-center gap-3 justify-center">
+            <i class="fas fa-shield-alt text-purple-600 text-xl"></i>
+            <span class="font-semibold">Trust Signal Assessment</span>
+          </div>
+        </div>
+
+        <button data-channel="whatsapp" class="contactBtn premium-btn inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-2xl font-bold transition-all duration-300 text-xl shadow-2xl hover:shadow-emerald-500/25">
+          Get Free Audit <span class="text-emerald-200">($500 Value)</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <p class="premium-text text-gray-500 mt-4">No spam, no strings attached. Delivered within 24 hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300 pt-20 pb-12 px-6">
+    <!-- Glow Effect -->
+    <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-blue-500/10 blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center shadow-xl">
+            <span class="text-white font-bold text-xl">JM</span>
+          </div>
+          <h2 class="premium-heading font-bold text-white text-xl">Juan Manuel</h2>
+        </div>
+        <p class="premium-text text-gray-400 leading-relaxed">
+          Helping Shopify merchants resolve compliance challenges and achieve sustainable growth with tailored strategies.
+        </p>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-white font-bold text-lg mb-6">Services</h3>
+        <ul class="space-y-3 premium-text">
+          <li><a href="#" class="hover:text-white transition-colors">Compliance & Audit</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">SEO Optimization</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Conversion Optimization</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Custom Development</a></li>
+        </ul>
+      </div>
+
+      <!-- Social Icons -->
+      <div>
+        <h3 class="text-white font-bold text-lg mb-6">Connect</h3>
+        <div class="flex gap-4">
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-green-500 transition-all duration-300 shadow-lg hover:shadow-green-500/25">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-sky-400 transition-all duration-300 shadow-lg hover:shadow-sky-400/25">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-pink-500 transition-all duration-300 shadow-lg hover:shadow-pink-500/25">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/25">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="max-w-7xl mx-auto relative z-10 pt-8 mt-12 border-t border-gray-700">
+      <div class="premium-text text-center text-gray-500">
+        © 2025 Juan Manuel. All rights reserved.
+      </div>
     </div>
   </footer>
-</main>
 
-<!-- =====================================================
-     FLOATING WHATSAPP BUTTON
-===================================================== -->
+<!-- Floating WhatsApp -->
 <div id="floatingWhatsApp" class="floating-whatsapp hidden" title="Quick WhatsApp Support">
-  <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.485 3.685"/>
-  </svg>
+  <i class="fab fa-whatsapp text-white text-2xl"></i>
 </div>
 
-<!-- =====================================================
-     MODAL POPUP SECTION
-===================================================== -->
+<!-- Modal and Toast remain the same as in original -->
 <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm">
   <div class="premium-card rounded-2xl shadow-2xl p-6 w-full max-w-md fade-in mx-4">
     <div class="flex justify-between items-center mb-4">
@@ -709,80 +1147,53 @@ setInterval(showNextImage, 5000); // 5s per slide
   </div>
 </div>
 
-<!-- =====================================================
-     TOAST NOTIFICATION
-===================================================== -->
-<div id="toast" class="toast hidden">
+<div id="toast" class="fixed right-5 bottom-24 z-50 hidden">
   <div class="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M9 12l2 2 4-4"/>
     </svg>
-    ✅ Priority ticket submitted — opening secure channel...
+    Priority ticket submitted — opening secure channel...
   </div>
 </div>
 
-<!-- =====================================================
-     JAVASCRIPT FUNCTIONALITY
-===================================================== -->
 <script>
-  // =====================================================
-  // LOADING PROGRESS CONFIGURATION
-  // =====================================================
-  const steps = [
-    "Verifying merchant details",
-    "Checking policy & compliance status", 
-    "Assigning premium advisor",
-    "Preparing encrypted channel"
-  ];
-
   const FALLBACK_PHOTO = "https://images.unsplash.com/photo-1593032457860-9e1d5bc3c7d4?q=80&w=640&auto=format&fit=crop";
 
-  // =====================================================
-  // DOM INITIALIZATION
-  // =====================================================
+  // DOM Initialization
   document.addEventListener("DOMContentLoaded", () => {
     initializeLogos();
-    populateAdvisorInfo();
+    populateDeveloperInfo();
     setupEventListeners();
     runLoadingProgress();
+    setupFAQs();
   });
 
-  // =====================================================
-  // LOGO & IMAGE SETUP
-  // =====================================================
+  // Logo Setup
   function initializeLogos() {
     const fav = document.getElementById('faviconLink');
     if (fav) fav.href = CONFIG.logoUrl;
     
-    const logoElements = ['logoTop', 'logoTopLoading', 'logoTopLoadingMobile'];
-    logoElements.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.src = CONFIG.logoUrl;
-    });
+    const logoTop = document.getElementById('logoTop');
+    if (logoTop) logoTop.src = CONFIG.logoUrl;
   }
 
-  // =====================================================
-  // ADVISOR INFORMATION SETUP
-  // =====================================================
-  function populateAdvisorInfo() {
-    const photoEl = document.getElementById('advisorPhoto');
+  // Developer Info
+  function populateDeveloperInfo() {
+    const photoEl = document.getElementById('developerPhoto');
     if (photoEl) {
-      photoEl.src = CONFIG.advisor.photoUrl;
+      photoEl.src = CONFIG.developer.photoUrl;
       photoEl.onerror = () => { photoEl.src = FALLBACK_PHOTO; };
     }
 
-    // Populate advisor details
     const updates = {
-      'advisorName': CONFIG.advisor.name,
-      'advisorTitle': CONFIG.advisor.title,
-      'staffIdSpan': `Advisor ID: <strong>${CONFIG.advisor.staffId}</strong>`,
-      'caseIdSpan': `Case ID: <strong>${CONFIG.advisor.caseId}</strong>`,
-      'expSpan': `Experience: ${CONFIG.advisor.years}`,
-      'helpedSpan': `Merchants helped: ${CONFIG.advisor.merchantsHelped}+`,
-      'ratingSpan': `Rating: ${CONFIG.advisor.rating}/5 ⭐`,
-      'badgeSpan': CONFIG.advisor.partnerBadge,
-      'casesHandledSpan': `${CONFIG.advisor.merchantsHelped}+ merchant cases handled`,
-      'year': new Date().getFullYear(),
+      'developerName': CONFIG.developer.name,
+      'developerTitle': CONFIG.developer.title,
+      'devIdSpan': `Advisor ID: <strong>${CONFIG.developer.staffId}</strong>`,
+      'projectIdSpan': `Case ID: <strong>${CONFIG.developer.caseId}</strong>`,
+      'expSpan': `Experience: ${CONFIG.developer.years}`,
+      'builtSpan': `Stores built: ${CONFIG.developer.storesBuilt}+`,
+      'ratingSpan': `Rating: ${CONFIG.developer.rating}/5 ⭐`,
+      'badgeSpan': CONFIG.developer.partnerBadge,
       'ticketIdText': CONFIG.ticketId
     };
 
@@ -796,17 +1207,10 @@ setInterval(showNextImage, 5000); // 5s per slide
         }
       }
     });
-
-    // Also update second ticket ID reference
-    const ticketId2 = document.getElementById('ticketIdText2');
-    if (ticketId2) ticketId2.textContent = CONFIG.ticketId;
   }
 
-  // =====================================================
-  // EVENT LISTENERS SETUP
-  // =====================================================
+  // Event Listeners
   function setupEventListeners() {
-    // Contact buttons - both main and floating
     document.querySelectorAll('.contactBtn').forEach(btn => {
       btn.addEventListener('click', () => {
         const channel = btn.getAttribute('data-channel');
@@ -814,113 +1218,124 @@ setInterval(showNextImage, 5000); // 5s per slide
       });
     });
 
-    // Floating WhatsApp button
     document.getElementById('floatingWhatsApp').addEventListener('click', () => {
       openModal('whatsapp');
     });
 
-    // Modal controls
     document.getElementById('modalClose').addEventListener('click', closeModal);
     document.getElementById('cancelBtn').addEventListener('click', closeModal);
-    document.getElementById('sendBtn').addEventListener('click', sendTicket);
+    document.getElementById('sendBtn').addEventListener('click', sendQuote);
   }
 
-  // =====================================================
-  // LOADING PROGRESS ANIMATION
-  // =====================================================
+  // FAQ Setup
+  function setupFAQs() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const content = item.querySelector('.faq-content');
+        const icon = item.querySelector('.faq-icon');
+        
+        if (content && icon) {
+          document.querySelectorAll('.faq-content').forEach(otherContent => {
+            if (otherContent !== content) {
+              otherContent.classList.add('hidden');
+              const otherIcon = otherContent.parentElement.querySelector('.faq-icon');
+              if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            }
+          });
+          
+          content.classList.toggle('hidden');
+          icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+      });
+    });
+  }
+
+  // Loading Progress
   function runLoadingProgress() {
-    const statusMessages = [
-      { message: "Initializing premium workspace...", duration: 500 },
-      { message: "Verifying merchant credentials...", duration: 600 },
-      { message: "Analyzing compliance status...", duration: 550 },
-      { message: "Matching with expert advisor...", duration: 450 },
-      { message: "Preparing encrypted channels...", duration: 400 }
+    const loadingMessages = [
+      "Preparing your premium workspace...",
+      "Loading conversion optimization tools...",
+      "Optimizing store performance modules...",
+      "Loading advanced eCommerce frameworks...",
+      "Finalizing merchant support systems...",
+      "Almost ready to launch..."
     ];
 
-    const statusMessageEl = document.getElementById('statusMessage');
+    const subtitle = document.getElementById('loadingSubtitle');
     const counter = document.getElementById('percentageCounter');
     
     let currentPercent = 0;
-    let totalDuration = 0;
+    let messageIndex = 0;
 
-    // Status message update function with smooth transitions
-    function updateStatus(message) {
-      statusMessageEl.style.opacity = '0';
-      setTimeout(() => {
-        statusMessageEl.textContent = message;
-        statusMessageEl.style.opacity = '1';
-      }, 150);
-    }
-
-    // Cycle through status messages
-    statusMessages.forEach((status, index) => {
-      setTimeout(() => {
-        updateStatus(status.message);
-      }, totalDuration);
-      totalDuration += status.duration;
-    });
-
-    // Smooth percentage counter
-    const percentInterval = setInterval(() => {
-      currentPercent += 4; // Increment by 4 every 100ms to reach 100% in 2.5 seconds
-      counter.textContent = Math.min(currentPercent, 100);
-      if (currentPercent >= 100) {
-        clearInterval(percentInterval);
-      }
-    }, 100);
-
-    // Show main content after loading
-    setTimeout(() => {
-      const loading = document.getElementById('loading');
-      const main = document.getElementById('main');
-      const onlineStatus = document.getElementById('onlineStatus');
-      const floatingWhatsApp = document.getElementById('floatingWhatsApp');
+    const loadingInterval = setInterval(() => {
+      currentPercent = Math.min(100, currentPercent + Math.floor(Math.random() * 12) + 3);
+      if (counter) counter.textContent = currentPercent + '%';
       
-      if (loading) loading.classList.add('hidden');
-      if (main) main.classList.remove('hidden');
-      if (onlineStatus) onlineStatus.classList.remove('hidden');
-      if (floatingWhatsApp) floatingWhatsApp.classList.remove('hidden');
-    }, CONFIG.loadingDuration);
+      if (currentPercent >= 100) {
+        clearInterval(loadingInterval);
+        clearInterval(messageInterval);
+        if (subtitle) subtitle.textContent = "Launch complete!";
+        
+        setTimeout(() => {
+          const loading = document.getElementById('loading');
+          const main = document.getElementById('main');
+          const onlineStatus = document.getElementById('onlineStatus');
+          const floatingWhatsApp = document.getElementById('floatingWhatsApp');
+          
+          if (loading) loading.style.display = 'none';
+          if (main) main.classList.remove('hidden');
+          if (onlineStatus) onlineStatus.classList.remove('hidden');
+          if (floatingWhatsApp) floatingWhatsApp.classList.remove('hidden');
+        }, 1000);
+      }
+    }, 150);
+
+    const messageInterval = setInterval(() => {
+      if (currentPercent < 100 && subtitle) {
+        subtitle.textContent = loadingMessages[messageIndex % loadingMessages.length];
+        messageIndex++;
+      }
+    }, 2500);
   }
 
-  // =====================================================
-  // MODAL FUNCTIONALITY
-  // =====================================================
+  // Modal Functions
   let activeChannel = null;
 
   function openModal(channel) {
     activeChannel = channel;
-    document.getElementById('modal').classList.remove('hidden');
-    document.getElementById('modal').classList.add('flex');
-    
-    // Focus first input after animation
-    setTimeout(() => {
-      document.getElementById('inputStore').focus();
-    }, 150);
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      setTimeout(() => {
+        const input = document.getElementById('inputStore');
+        if (input) input.focus();
+      }, 200);
+    }
   }
 
   function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-    document.getElementById('modal').classList.remove('flex');
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
     activeChannel = null;
   }
 
-  // =====================================================
-  // TICKET SUBMISSION
-  // =====================================================
-  function sendTicket() {
-    const store = document.getElementById('inputStore').value.trim();
-    const email = document.getElementById('inputEmail').value.trim();
-    const issue = document.getElementById('inputIssue').value;
-    const notes = document.getElementById('inputNotes').value.trim();
+  // Ticket Submission
+  function sendQuote() {
+    const store = document.getElementById('inputStore')?.value.trim() || '';
+    const email = document.getElementById('inputEmail')?.value.trim() || '';
+    const issue = document.getElementById('inputIssue')?.value || '';
+    const notes = document.getElementById('inputNotes')?.value.trim() || '';
 
-    // Validation
     if (!store || !email) {
-      alert('Please provide Store URL and Email before continuing.');
+      alert('Please provide Store URL/Business Name and Email before continuing.');
       return;
     }
 
-    // Create ticket message
     const ticket = CONFIG.ticketId;
     const message = `🟢 Priority Support Ticket Created
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -933,10 +1348,8 @@ Notes: ${notes}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Advisor: Juan Manuel (Verified)
 Status: PRIORITY CASE - Immediate Response`;
-
     const encoded = encodeURIComponent(message);
 
-    // Open appropriate channel
     if (activeChannel === 'whatsapp') {
       const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`;
       window.open(url, '_blank');
@@ -948,28 +1361,32 @@ Status: PRIORITY CASE - Immediate Response`;
       window.location.href = mailto;
     }
 
-    // Show success feedback
     closeModal();
     showToast();
     resetForm();
   }
 
-  // =====================================================
-  // UTILITY FUNCTIONS
-  // =====================================================
+  // Utility Functions
   function showToast() {
     const toast = document.getElementById('toast');
-    toast.classList.remove('hidden');
-    setTimeout(() => {
-      toast.classList.add('hidden');
-    }, 4000);
+    if (toast) {
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 5000);
+    }
   }
 
   function resetForm() {
-    document.getElementById('inputStore').value = '';
-    document.getElementById('inputEmail').value = '';
-    document.getElementById('inputIssue').selectedIndex = 0;
-    document.getElementById('inputNotes').value = '';
+    const inputs = ['inputStore', 'inputEmail', 'inputNotes'];
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    
+    const select = document.getElementById('inputIssue');
+    if (select) select.selectedIndex = 0;
+    
     activeChannel = null;
   }
 </script>
