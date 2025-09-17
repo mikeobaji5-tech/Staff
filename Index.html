@@ -474,35 +474,190 @@
       }
     }
 
-    /* Floating WhatsApp */
-    .floating-whatsapp {
+    /* Enhanced AI Support Bot Styles */
+    .ai-support-bot {
       position: fixed;
-      bottom: 24px; right: 24px;
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, #25D366 0%, #1ebe57 100%);
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .bot-main-button {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 
-        0 8px 25px rgba(37, 211, 102, 0.4),
-        0 4px 12px rgba(37, 211, 102, 0.3);
+        0 8px 32px rgba(79, 70, 229, 0.4),
+        0 4px 16px rgba(79, 70, 229, 0.3);
       cursor: pointer;
-      z-index: 50;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: whatsappFloat 4s ease-in-out infinite;
+      animation: botFloat 4s ease-in-out infinite;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
     }
-    
-    .floating-whatsapp:hover {
-      transform: scale(1.15) translateY(-2px);
+
+    .bot-main-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+      border-radius: 50%;
+      border: 2px solid white;
+      animation: onlineIndicator 2s ease-in-out infinite;
+    }
+
+    @keyframes onlineIndicator {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .bot-main-button:hover {
+      transform: scale(1.1) translateY(-2px);
       box-shadow: 
-        0 12px 35px rgba(37, 211, 102, 0.6),
-        0 6px 16px rgba(37, 211, 102, 0.4);
+        0 12px 40px rgba(79, 70, 229, 0.6),
+        0 6px 20px rgba(79, 70, 229, 0.4);
     }
-    
-    @keyframes whatsappFloat {
+
+    @keyframes botFloat {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-12px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .bot-panel {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bot-panel.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .bot-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .bot-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .bot-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      background: #10B981;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
+
+    .bot-info h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F2937;
+    }
+
+    .bot-info p {
+      margin: 0;
+      font-size: 12px;
+      color: #6B7280;
+    }
+
+    .support-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .support-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .support-option:hover {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      transform: translateX(2px);
+    }
+
+    .support-option.whatsapp:hover { border-color: #25D366; }
+    .support-option.telegram:hover { border-color: #0088CC; }
+    .support-option.email:hover { border-color: #374151; }
+
+    .option-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+    }
+
+    .option-icon.whatsapp { background: linear-gradient(135deg, #25D366 0%, #1ebe57 100%); }
+    .option-icon.telegram { background: linear-gradient(135deg, #0088CC 0%, #0077B5 100%); }
+    .option-icon.email { background: linear-gradient(135deg, #374151 0%, #1F2937 100%); }
+
+    .option-text h5 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1F2937;
+    }
+
+    .option-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #6B7280;
     }
 
     /* Success Stories Enhancement */
@@ -554,6 +709,42 @@
       left: 100%;
     }
 
+    /* Support Form Modal */
+    .support-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .support-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      margin: 20px;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .support-modal.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
     /* Responsive Typography */
     @media (max-width: 768px) {
       .premium-heading-xl { font-size: 2.5rem; }
@@ -562,12 +753,25 @@
       .premium-text-lead { font-size: 1.125rem; }
       .loading-title { font-size: 2rem; }
       .loading-subtitle { font-size: 1rem; }
+      
+      .bot-panel {
+        width: 280px;
+      }
+      
+      .ai-support-bot {
+        bottom: 20px;
+        right: 20px;
+      }
     }
 
     @media (max-width: 480px) {
       .premium-heading-xl { font-size: 2rem; }
       .premium-heading-lg { font-size: 1.75rem; }
       .premium-heading-md { font-size: 1.25rem; }
+      
+      .bot-panel {
+        width: 260px;
+      }
     }
   </style>
 
@@ -739,15 +943,6 @@
         All conversations are encrypted and handled under <strong class="text-gradient-emerald"></strong>.
       </p>
     </div>
-    
-     </div>
-      <div class="hero-gallery__main-image">
-        <video src="https://www.charleagency.com/assets/videos/hero-video.mp4" autoplay muted loop playsinline></video>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Hero Gallery -->
 
     <!-- RIGHT: HOW IT WORKS -->
     <aside class="premium-card rounded-3xl p-8 md:p-10 slide-up premium-hover" style="animation-delay: 0.2s;">
@@ -1098,13 +1293,153 @@
       </div>
     </div>
   </footer>
+photoUrl: ""
+    },
+<!-- Enhanced AI Support Bot -->
+<div id="aiSupportBot" class="ai-support-bot hidden">
+  <!-- Bot Panel (Initially Hidden) -->
+  <div id="botPanel" class="bot-panel">
+    <!-- Profile Section -->
+    <div class="bot-profile">
+            <img id="waStaffImg" src="https://i.pravatar.cc/80?img=12" alt="Advisor" class="w-12 h-12 rounded-full border-2 border-white">
 
-<!-- Floating WhatsApp -->
-<div id="floatingWhatsApp" class="floating-whatsapp hidden" title="Quick WhatsApp Support">
-  <i class="fab fa-whatsapp text-white text-2xl"></i>
+      <div class="bot-info">
+        <h4>Live Support Assistant</h4>
+        <p>Online • Ready to help</p>
+      </div>
+    </div>
+    
+    <!-- Support Options -->
+    <div class="support-options">
+      <div class="support-option whatsapp" data-channel="whatsapp">
+        <div class="option-icon whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="option-text">
+          <h5>WhatsApp Chat</h5>
+          <p>Instant messaging support</p>
+        </div>
+      </div>
+      
+      <div class="support-option telegram" data-channel="telegram">
+        <div class="option-icon telegram">
+          <i class="fab fa-telegram"></i>
+        </div>
+        <div class="option-text">
+          <h5>Telegram Support</h5>
+          <p>Secure chat platform</p>
+        </div>
+      </div>
+      
+      <div class="support-option email" data-channel="email">
+        <div class="option-icon email">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="option-text">
+          <h5>Email Support</h5>
+          <p>Detailed case handling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Bot Button -->
+  <div id="botMainButton" class="bot-main-button">
+    <i class="fas fa-robot text-white text-2xl"></i>
+  </div>
 </div>
 
-<!-- Modal and Toast remain the same as in original -->
+<!-- Support Form Modal -->
+<div id="supportModal" class="support-modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
+          <i id="modalChannelIcon" class="text-white text-sm"></i>
+        </div>
+        <h3 id="modalTitle" class="text-lg font-semibold text-gray-800"></h3>
+      </div>
+      <button id="modalCloseBtn" class="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center">×</button>
+    </div>
+    
+    <div class="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
+      <p class="text-xs text-blue-800">
+        <strong>Priority Ticket:</strong> <span id="ticketIdDisplay" class="font-mono"></span>
+      </p>
+    </div>
+
+    <form id="supportForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Store URL *</label>
+        <input 
+          id="storeUrl" 
+          type="text" 
+          required 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="example.myshopify.com"
+        />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+        <input 
+          id="emailAddress" 
+          type="email" 
+          required 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="you@example.com"
+        />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Issue Category</label>
+        <select 
+          id="issueCategory" 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+        >
+          <option>Compliance Warning</option>
+          <option>Checkout / Payment Issue</option>
+          <option>Store Visibility (SEO)</option>
+          <option>Growth & Marketing</option>
+          <option>Technical Support</option>
+          <option>Other</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+        <textarea 
+          id="supportMessage" 
+          rows="3" 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="Describe your challenge or specific needs..."
+        ></textarea>
+      </div>
+      
+      <div class="flex gap-3 pt-2">
+        <button 
+          type="submit" 
+          class="flex-1 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-2.5 px-4 rounded-lg font-medium transition-all duration-300 text-sm"
+        >
+          Submit & Connect
+        </button>
+        <button 
+          type="button" 
+          id="modalCancelBtn"
+          class="flex-1 border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+    
+    <p class="mt-3 text-xs text-gray-500 text-center">
+      Your request will be prioritized and Juan Manuel will respond within minutes.
+    </p>
+  </div>
+</div>
+
+<!-- Original Modal for backward compatibility -->
 <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm">
   <div class="premium-card rounded-2xl shadow-2xl p-6 w-full max-w-md fade-in mx-4">
     <div class="flex justify-between items-center mb-4">
@@ -1166,6 +1501,7 @@
     setupEventListeners();
     runLoadingProgress();
     setupFAQs();
+    initializeAIBot();
   });
 
   // Logo Setup
@@ -1194,7 +1530,8 @@
       'builtSpan': `Stores built: ${CONFIG.developer.storesBuilt}+`,
       'ratingSpan': `Rating: ${CONFIG.developer.rating}/5 ⭐`,
       'badgeSpan': CONFIG.developer.partnerBadge,
-      'ticketIdText': CONFIG.ticketId
+      'ticketIdText': CONFIG.ticketId,
+      'ticketIdDisplay': CONFIG.ticketId
     };
 
     Object.entries(updates).forEach(([id, content]) => {
@@ -1209,8 +1546,93 @@
     });
   }
 
+  // AI Bot Initialization
+  function initializeAIBot() {
+    const aiBot = document.getElementById('aiSupportBot');
+    const botButton = document.getElementById('botMainButton');
+    const botPanel = document.getElementById('botPanel');
+    const supportOptions = document.querySelectorAll('.support-option');
+    
+    if (aiBot && botButton && botPanel) {
+      // Show bot after loading
+      setTimeout(() => {
+        aiBot.classList.remove('hidden');
+      }, 1000);
+
+      // Toggle panel on button click
+      botButton.addEventListener('click', () => {
+        botPanel.classList.toggle('active');
+      });
+
+      // Handle support option clicks
+      supportOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const channel = option.getAttribute('data-channel');
+          botPanel.classList.remove('active');
+          openSupportModal(channel);
+        });
+      });
+
+      // Close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!aiBot.contains(e.target)) {
+          botPanel.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  // Enhanced Support Modal
+  let currentChannel = null;
+
+  function openSupportModal(channel) {
+    currentChannel = channel;
+    const modal = document.getElementById('supportModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIcon = document.getElementById('modalChannelIcon');
+    
+    if (!modal || !modalTitle || !modalIcon) return;
+
+    // Set channel-specific content
+    const channelConfig = {
+      whatsapp: {
+        title: 'WhatsApp Support',
+        icon: 'fab fa-whatsapp'
+      },
+      telegram: {
+        title: 'Telegram Support',
+        icon: 'fab fa-telegram'
+      },
+      email: {
+        title: 'Email Support',
+        icon: 'fas fa-envelope'
+      }
+    };
+
+    const config = channelConfig[channel] || channelConfig.whatsapp;
+    modalTitle.textContent = config.title;
+    modalIcon.className = `${config.icon} text-white text-sm`;
+
+    modal.classList.add('active');
+    
+    // Focus on first input
+    setTimeout(() => {
+      const storeInput = document.getElementById('storeUrl');
+      if (storeInput) storeInput.focus();
+    }, 300);
+  }
+
+  function closeSupportModal() {
+    const modal = document.getElementById('supportModal');
+    if (modal) {
+      modal.classList.remove('active');
+    }
+    currentChannel = null;
+  }
+
   // Event Listeners
   function setupEventListeners() {
+    // Original contact buttons
     document.querySelectorAll('.contactBtn').forEach(btn => {
       btn.addEventListener('click', () => {
         const channel = btn.getAttribute('data-channel');
@@ -1218,13 +1640,89 @@
       });
     });
 
-    document.getElementById('floatingWhatsApp').addEventListener('click', () => {
-      openModal('whatsapp');
-    });
+    // Support modal handlers
+    const supportForm = document.getElementById('supportForm');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
 
+    if (supportForm) {
+      supportForm.addEventListener('submit', handleSupportSubmit);
+    }
+    
+    if (modalCloseBtn) {
+      modalCloseBtn.addEventListener('click', closeSupportModal);
+    }
+    
+    if (modalCancelBtn) {
+      modalCancelBtn.addEventListener('click', closeSupportModal);
+    }
+
+    // Original modal handlers
     document.getElementById('modalClose').addEventListener('click', closeModal);
     document.getElementById('cancelBtn').addEventListener('click', closeModal);
     document.getElementById('sendBtn').addEventListener('click', sendQuote);
+
+    // Close modals on outside click
+    document.getElementById('supportModal').addEventListener('click', (e) => {
+      if (e.target.id === 'supportModal') {
+        closeSupportModal();
+      }
+    });
+  }
+
+  // Handle Support Form Submission
+  function handleSupportSubmit(e) {
+    e.preventDefault();
+    
+    const storeUrl = document.getElementById('storeUrl')?.value.trim() || '';
+    const emailAddress = document.getElementById('emailAddress')?.value.trim() || '';
+    const issueCategory = document.getElementById('issueCategory')?.value || '';
+    const supportMessage = document.getElementById('supportMessage')?.value.trim() || '';
+
+    if (!storeUrl || !emailAddress) {
+      alert('Please provide Store URL and Email Address before continuing.');
+      return;
+    }
+
+    const ticket = CONFIG.ticketId;
+    const message = `🤖 AI Support Bot - Priority Ticket
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ticket ID: ${ticket}
+Channel: ${currentChannel?.toUpperCase()}
+Store: ${storeUrl}
+Email: ${emailAddress}
+Category: ${issueCategory}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Message: ${supportMessage}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Advisor: Juan Manuel (Verified)
+Status: PRIORITY CASE - AI Routed`;
+
+    const encoded = encodeURIComponent(message);
+
+    if (currentChannel === 'whatsapp') {
+      const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (currentChannel === 'telegram') {
+      const telegramUser = CONFIG.telegramUsername.replace('t.me/', '');
+      const url = `https://t.me/${telegramUser}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (currentChannel === 'email') {
+      const mailto = `mailto:${CONFIG.supportEmail}?subject=${encodeURIComponent('AI Support Bot - Priority Ticket ' + ticket)}&body=${encoded}`;
+      window.location.href = mailto;
+    }
+
+    closeSupportModal();
+    showToast();
+    resetSupportForm();
+  }
+
+  function resetSupportForm() {
+    const form = document.getElementById('supportForm');
+    if (form) {
+      form.reset();
+    }
+    currentChannel = null;
   }
 
   // FAQ Setup
@@ -1280,12 +1778,10 @@
           const loading = document.getElementById('loading');
           const main = document.getElementById('main');
           const onlineStatus = document.getElementById('onlineStatus');
-          const floatingWhatsApp = document.getElementById('floatingWhatsApp');
           
           if (loading) loading.style.display = 'none';
           if (main) main.classList.remove('hidden');
           if (onlineStatus) onlineStatus.classList.remove('hidden');
-          if (floatingWhatsApp) floatingWhatsApp.classList.remove('hidden');
         }, 1000);
       }
     }, 150);
@@ -1298,7 +1794,7 @@
     }, 2500);
   }
 
-  // Modal Functions
+  // Original Modal Functions (kept for compatibility)
   let activeChannel = null;
 
   function openModal(channel) {
@@ -1324,7 +1820,7 @@
     activeChannel = null;
   }
 
-  // Ticket Submission
+  // Original Ticket Submission
   function sendQuote() {
     const store = document.getElementById('inputStore')?.value.trim() || '';
     const email = document.getElementById('inputEmail')?.value.trim() || '';
